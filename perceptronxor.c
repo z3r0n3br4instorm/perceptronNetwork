@@ -18,8 +18,18 @@ int perceptron(int x, int y, float w1, float w2, float b) {
 }
 
 int main() {
+/*
+	We would require 4 Perceptrons to simulate an XOR gate.
+		Perceptron    		Weights		Input 1		Input 2		Outputs		True Outputs
+	
+	AND PERCEPTRON X2 =		w1A, w2A	  x                y		  zA	         trueOutAnd 
+	OR PERCEPTRON	  =		w1B, w2B          x                y              zB             trueOutOR
+!	NOT PERCEPTRON 	  =             w1C, w1C          x                x              zC             trueOutNOT (PROBLEMATIC !) (BIAS CALCULATION)
+
+
+*/
     float b1, b2, b3;
-    float w1A, w2A, w1B, w2B, w1C, w2C; // Corrected order of w2C
+    float w1A, w2A, w1B, w2B, w1C, w2C; 
     int x[4] = {0, 1, 0, 1};
     int y[4] = {0, 0, 1, 1};
     int iter;
@@ -45,7 +55,7 @@ int main() {
     // Training the perceptrons
     // AND
     while (iter < 1) {
-        for (int i = 0; i < 4; i++) { // Change i <= 4 to i < 4
+        for (int i = 0; i < 4; i++) { 
             while (trueOutAnd[i] != perceptron(x[i], y[i], w1A, w2A, b1)) {
                 b1 -= 1;
             }
@@ -62,7 +72,7 @@ int main() {
 
     // OR
     while (iter < 1) {
-        for (int i = 0; i < 4; i++) { // Change i <= 4 to i < 4
+        for (int i = 0; i < 4; i++) { 
             while (trueOutOR[i] != perceptron(x[i], y[i], w1B, w2B, b2)) {
                 b2 += 1;
             }
@@ -112,14 +122,14 @@ int main() {
     // }
     // printf("\n");
 
-	//Building the XOR network
-	int xor[4] = {0,0,0,0};
-	printf("XOR Gate Output :");
-	for (int i =0; i < 4; i++){
-		xor[i] = perceptron(perceptron(x[i], !(y[i]), w1A, w2A, b1), perceptron(!(x[i]), y[i], w1A, w2A, b1), w1B, w2B, b2);
-		printf(" %d", xor[i]);
-	}
-	printf("\n");
+    //Building the XOR network
+    int xor[4] = {0,0,0,0};
+    printf("XOR Gate Output :");
+    for (int i =0; i < 4; i++){
+	xor[i] = perceptron(perceptron(x[i], !(y[i]), w1A, w2A, b1), perceptron(!(x[i]), y[i], w1A, w2A, b1), w1B, w2B, b2);
+	printf(" %d", xor[i]);
+    }
+    printf("\n");
 
     return 0;
 }
